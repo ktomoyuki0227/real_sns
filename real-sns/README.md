@@ -18,10 +18,10 @@ React によるフロントエンドと、Node.js + Express によるバック�
 
 このプロジェクトをローカルで動かすための手順です。
 
-### 1. リポジトリをクローン
+### 1. リポジトリをクローン(ssh通信)
 
 ```bash
-git clone https://github.com/ktomoyuki0227/real_sns.git
+git clone git@github.com:ktomoyuki0227/real_sns.git
 cd real_sns/real-sns
 ```
 
@@ -44,18 +44,6 @@ npm run dev
 ```
 
 - API起動URL：[http://localhost:5000](http://localhost:5000)
-
----
-
-## 🔐 環境変数（`.env`）
-
-フロントエンドの `/frontend/.env` に以下の変数を設定してください：
-
-```env
-REACT_APP_PUBLIC_FOLDER=http://localhost:5000/images/
-```
-
-`.env` ファイルはセキュリティのため `.gitignore` に含まれており、GitHubにはアップロードされません。
 
 ---
 
