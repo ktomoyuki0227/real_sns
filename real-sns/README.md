@@ -1,4 +1,4 @@
-# real_sns (noseチェック済み！)
+# real_sns
 
 SNS機能を持つ Web アプリケーション開発プロジェクトです。  
 React によるフロントエンドと、Node.js + Express によるバックエンド、MongoDB を用いた構成で構築しています。
