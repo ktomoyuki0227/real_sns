@@ -18,10 +18,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# アップロード画像（サーバー上のもの）
+# アップロード画像（ユーザーが投稿した画像のみ除外）
 backend/public/images/post/*
-backend/public/images/person/*
-backend/public/images/promotion/*
+!backend/public/images/post/.gitkeep
 
 # OS
 .DS_Store
