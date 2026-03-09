@@ -1,41 +1,46 @@
 const router = require("express").Router();
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
-//ユーザー登録
+// 新規登録
 router.post("/register", async (req, res) => {
   try {
-    const newUser = await new User({
+    // パスワードをハッシュ化
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    const newUser = new User({
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
     });
 
     const user = await newUser.save();
-    return res.status(200).json(user);
+    res.status(201).json(user);
   } catch (err) {
-    return res.status(500).json(err);
+    res.status(500).json(err);
   }
 });
 
-//ログイン
+// ログイン
 router.post("/login", async (req, res) => {
   try {
-    const user = await User.findOne({
-      email: req.body.email
-    });
-    if (!user) return res.status(404).send("ユーザーが見つかりません");
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(404).json({ message: "メールアドレスが見つかりません" });
+    }
 
-    const validPassword = req.body.password === user.password;
-    if (!validPassword) return res.status(400).json("パスワードが違います");
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!validPassword) {
+      return res.status(400).json({ message: "パスワードが正しくありません" });
+    }
 
-    return res.status(200).json(user);
+    // パスワードを除いてレスポンス
+    const { password, ...others } = user._doc;
+    res.status(200).json(others);
   } catch (err) {
-    return res.status(500).json(err);
+    res.status(500).json(err);
   }
-})
-
-// router.get("/", (req, res) => {
-//     res.send("auth router");
-// });
+});
 
 module.exports = router;

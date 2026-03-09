@@ -21,8 +21,6 @@ export default function Login() {
 		);
 	};
 
-	console.log(user);
-
 	return (
 		<div className="login">
 			<div className="loginWrapper">
@@ -48,9 +46,16 @@ export default function Login() {
 							minLength="6"
 							ref={password}
 						/>
-						<button className="loginButton">ログイン</button>
+						{error && (
+							<span style={{ color: "red", fontSize: "13px", textAlign: "center" }}>
+								{typeof error === "string" ? error : "メールアドレスまたはパスワードが正しくありません"}
+							</span>
+						)}
+						<button className="loginButton" type="submit" disabled={isFetching}>
+							{isFetching ? "ログイン中..." : "ログイン"}
+						</button>
 						<span className="loginForgot">パスワードを忘れた方へ</span>
-						<button className="loginRegisterButton">アカウント作成</button>
+						<button className="loginRegisterButton" type="button" onClick={() => window.location.href='/register'}>アカウント作成</button>
 					</form>
 				</div>
 			</div>
