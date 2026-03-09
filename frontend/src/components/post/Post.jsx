@@ -17,9 +17,12 @@ export default function Post({ post }) {
 
 	useEffect(() => {
 		const fetchUser = async () => {
-			const response = await API.get(`/api/users?userId=${post.userId}`);
-			console.log(response);
-			setUser(response.data);
+			try {
+				const response = await API.get(`/api/users?userId=${post.userId}`);
+				setUser(response.data);
+			} catch (err) {
+				console.error(err);
+			}
 		};
 		fetchUser();
 	}, [post.userId]);
