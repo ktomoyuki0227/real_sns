@@ -22,11 +22,18 @@ mongoose.connect(process.env.MONGOURL)
 
 //CORS設定（フロントエンドからのリクエストを許可）
 const allowedOrigins = process.env.FRONTEND_URL
-  ? [process.env.FRONTEND_URL]
+  ? process.env.FRONTEND_URL.split(",").map((url) => url.trim())
   : ["http://localhost:3000"];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // originがない（同一オリジン・curl等）は許可
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("CORS policy violation: " + origin));
+  },
   credentials: true,
 }));
 
