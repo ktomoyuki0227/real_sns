@@ -6,7 +6,7 @@ import './Login.css';
 export default function Login() {
 	const email = useRef();
 	const password = useRef();
-	const { user, isFetching, error, dispatch } = useContext(AuthContext);
+	const { isFetching, error, dispatch } = useContext(AuthContext);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

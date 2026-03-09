@@ -35,7 +35,7 @@ export default function Share() {
 		}
 
 		try {
-			const res = await API.post("/api/posts", newPost);
+			await API.post("/api/posts", newPost);
 			window.location.reload();
 		} catch (err) {
 			console.error(err);
